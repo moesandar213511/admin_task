@@ -228,7 +228,7 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary pull-right" id="btn_submit">Create</button>
+                            <button type="submit" class="btn btn-primary pull-right">Create</button>
                             <div class="clearfix"></div>
                         </form>
                     </div>
@@ -378,7 +378,7 @@
 {{--                                </div>--}}
                             </div>
 
-                            <button type="submit" class="btn btn-primary pull-right" id="btn_submit">Update</button>
+                            <button type="submit" class="btn btn-primary pull-right">Update</button>
                             <div class="clearfix"></div>
                         </form>
                     </div>
@@ -429,7 +429,7 @@
                         var no = 1;
                         for(var i = 0;i<data_return.length;i++){
                             var link="{{url('company')}}/"+data_return[i]['id'];
-                            var gallery_link="{{url('/member/company_photodetail/')}}/"+data_return[i]['id']
+                            var gallery_link="{{url('/member/company_photodetail/')}}/"+data_return[i]['id'];
                             t.row.add([
                                 no++,
                                 '<img src="'+data_return[i]['photo_url']+'" alt="" style="width:80px;height:80px">',

@@ -107,20 +107,16 @@
                                          <input type="phone" name="phone" class="form-control" id="phone" required>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="position">Position</label>
                                          <input type="text" name="position" class="form-control" id="position" required>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="type"><b>Type</b></label><br>
-                                       <select name="member_type" id="type" class="form-control" required>
-                                            <option value="">-- Select Member Type--</option>
-                                            <option value="special">Special</option>
-                                            <option value="normal">Normal</option>
-                                        </select>
+                                        <label for="education"><b>Education</b></label>
+                                        <input type="text" name="education" id="education" class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -150,41 +146,13 @@
                                 </div>
                                  <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="education"><b>Education</b></label><br>
-                                        <input type="text" name="education" id="education" class="form-control" required>
-                                    </div>
-                                </div>
-                                 <div class="col-md-12">
-                                    <div class="form-group">
                                         <label for="detail
                                             "><b>Detail</b></label><br>
                                         <textarea name="detail" id="detail" rows="2" class="form-control" required></textarea>
                                     </div>
                                 </div>
-
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="fb_link
-                                            "><b>Facebook</b></label><br>
-                                        <input type="text" name="facebook" id="fb_link" class="form-control">
-                                    </div>
-                                </div>
-                                 <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="tw_link
-                                            "><b>Twitter</b></label><br>
-                                        <input type="text" name="twitter" id="tw_link" class="form-control">
-                                    </div>
-                                </div>
-                                 <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="in_link
-                                            "><b>Instagram</b></label><br>
-                                        <input type="text" name="instagram" id="in_link" class="form-control">
-                                    </div>
-                                </div>
                             </div>
-                            <button type="submit" class="btn btn-primary pull-right" id="btn_submit">Create</button>
+                            <button type="submit" class="btn btn-primary pull-right">Create</button>
                             <div class="clearfix"></div>
                         </form>
                     </div>
@@ -224,16 +192,6 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="update_type"><b>Type</b></label><br>
-                                       <select name="member_type" id="update_type" class="form-control" required>
-                                            <option value="">-- Select Member Type--</option>
-                                            <option value="special">Special</option>
-                                            <option value="normal">Normal</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
                                         <label for="update_phone">Phone</label>
                                          <input type="phone" name="phone" class="form-control" id="update_phone" required>
                                     </div>
@@ -263,29 +221,8 @@
                                         <textarea name="detail" id="update_detail" rows="2" class="form-control" required></textarea>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="update_fb_link
-                                            "><b>Facebook</b></label><br>
-                                        <input type="text" name="facebook" id="update_fb_link" class="form-control">
-                                    </div>
-                                </div>
-                                 <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="update_tw_link
-                                            "><b>Twitter</b></label><br>
-                                        <input type="text" name="twitter" id="update_tw_link" class="form-control">
-                                    </div>
-                                </div>
-                                 <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="update_in_link
-                                            "><b>Instagram</b></label><br>
-                                        <input type="text" name="instagram" id="update_in_link" class="form-control">
-                                    </div>
-                                </div>
                             </div>
-                            <button type="submit" class="btn btn-primary pull-right" id="btn_submit">Update</button>
+                            <button type="submit" class="btn btn-primary pull-right">Update</button>
                             <div class="clearfix"></div>
                         </form>
                     </div>
@@ -341,7 +278,7 @@
                                 data_return[i]['name'],
                                 data_return[i]['phone'],
                                 data_return[i]['address'],
-                                '<a href="'+link+'" class="btn btn-primary rounded-0 btn-sm">Detail</a>'+
+                                '<a href="'+link+'" class="btn btn-primary rounded-0 btn-sm" target="_blank">Detail</a>'+
                                 '<button class="btn btn-info btn-sm" onclick="edit_data('+data_return[i]['id']+')" data-target="#edit_modalBox" data-toggle="modal" data-keyboard="false" data-backdrop="static">Edit</button>'+
                                 '<button class="btn btn-danger btn-sm" onclick="delete_data('+data_return[i]['id']+')">Delete</button>'
                             ]).draw( false );
@@ -365,7 +302,7 @@
                     processData: false,
                     contentType: false,
                     success: function(data){
-                        alert('itwork');
+                        // alert('itwork');
                         console.log(data);
                         $('#modalBox').modal('hide');
                         toastr.success('Create member account successful');
@@ -379,7 +316,7 @@
                 // alert(id);
                 $.ajax({
                     type: "get",
-                    url: "../edit/member/"+id,
+                    url: "././edit/member/"+id,
 
                     cache: false,
                     success: function(data){
@@ -397,9 +334,6 @@
                         $('#update_address').val(member['address']);
                         $('#update_education').val(member['education']);
                         $('#update_detail').val(member['detail']);
-                        $('#update_fb_link').val(member['fb_link']);
-                        $('#update_tw_link').val(member['tw_link']);
-                        $('#update_in_link').val(member['in_link']);
                     }
                 });
             }
@@ -446,13 +380,13 @@
 
             delete_data=function(id){
             var delete_url="{{url('admin/delete_member')}}/"+id;
-            var url="{{url('admin/delete/mem_company')}}/"+id;
+            var url="{{url('admin/delete/mem_task')}}/"+id;
                 $.ajax({
                     url : url,
                     type : "get",
                     dataType : "json"
                     }).done(function(response){
-                        if(confirm(`This member has ${response} company. Are you sure you want to delete?`)){
+                        if(confirm(`This member has ${response} task. Are you sure you want to delete?`)){
                             $.ajax({
                             url : delete_url,
                             type : "post",
@@ -474,3 +408,5 @@
         });
     </script>
 @endsection
+
+ {{-- id="btn_submit" --}}

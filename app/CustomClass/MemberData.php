@@ -35,13 +35,4 @@ class MemberData
         $this->member_data = $member_data;
     }
 
-    public static function getCustomMember($datas){
-        $arr=[];
-        foreach ($datas as $item){
-            $obj=new MemberData($item->id);
-            array_push($arr,$obj->getMemberData());
-        }
-        return $arr;
-    }
-
 }

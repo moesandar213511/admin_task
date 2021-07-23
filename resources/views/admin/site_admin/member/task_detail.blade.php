@@ -1,5 +1,5 @@
 @extends('admin.layouts.site_admin.site_admin_design')
-@section('title','Admin | Member Detail')
+@section('title','Admin | Company Detail')
 @section('css')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 
@@ -32,7 +32,7 @@
 @endsection
 
 @section('nav_bar_text')
-    Member Account Detail
+    Task Detail
 @endsection
 @section('content')
     <div class="content">
@@ -40,38 +40,39 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
+                        {{-- <div class="card-header card-header-primary">
+                        <button type="button" name="button" class="btn btn-success pull-right" data-keyboard="false" data-backdrop="static"><a href="">Update Photos</a></button>
+                        </div> --}}
                         <div class="card-body">
                             <div class="table-responsive">
                                <table class="table table-hovered">
                                     <tbody>
-                                      <tr>
-                                        <td><b>Photo</b></td>
-                                        <td><img src="{{asset('upload/member/'.$member_detail['photo'])}}" width="190px" height="220px"></td>
-                                      </tr>
+                                        @foreach($task_arr as $task_each)
                                       <tr>
                                         <td><b>Name</b></td>
-                                        <td>{{$member_detail['name']}}</td>
+                                        <td>{{$task_each->name}}</td>
                                       </tr>
                                       <tr>
-                                        <td><b>Phone</b></td>
-                                        <td>{{$member_detail['phone']}}</td>
-                                      </tr>
-                                      <tr>
-                                        <td><b>Position</b></td>
-                                        <td>{{$member_detail['position']}}</td>
-                                      </tr>
-                                      <tr>
-                                        <td><b>Address</b></td>
-                                        <td>{{$member_detail['address']}}</td>
-                                      </tr>
-                                      <tr>
-                                        <td><b>Education</b></td>
-                                        <td>{{$member_detail['education']}}</td>
+                                        <td><b>List Name</b></td>
+                                        <td>{{$task_each['list_id']}}</td>
                                       </tr>
                                       <tr>
                                         <td><b>Detail</b></td>
-                                        <td>{{$member_detail['detail']}}</td>
+                                        <td>{{$task_each['detail']}}</td>
                                       </tr>
+                                      <tr>
+                                        <td><b>Member</b></td>
+                                        <td>{{$task_each['user_id']}}</td>
+                                      </tr>
+                                      <tr>
+                                        <td><b>Deadline</b></td>
+                                        <td>{{$task_each['deadline']}}</td>
+                                      </tr>
+                                      <tr>
+                                        <td><b>Status</b></td>
+                                        <td>{{$task_each['status']}}</td>
+                                      </tr>
+                                      @endforeach
                                     </tbody>
                                   </table>
                             </div>

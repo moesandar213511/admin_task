@@ -31,7 +31,7 @@ class HomeController extends Controller
                 //'category'=>$category
             ]);
         } else {
-            return redirect('member/company');
+            return redirect('member/task');
         }
 
     }

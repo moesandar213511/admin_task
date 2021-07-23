@@ -199,6 +199,8 @@ class CompanyController extends Controller
         }
         $company->delete();
 
+        
+
     }
 
     public function get_all_company(){

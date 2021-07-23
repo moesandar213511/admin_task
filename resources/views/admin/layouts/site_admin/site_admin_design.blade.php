@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <link rel="apple-touch-icon" sizes="76x76" href="{{asset('/user/images/logo-mea-admin.png')}}">
-    <link rel="icon" type="image/png" href="{{asset('/user/images/logo-mea-admin.png')}}">
+    <link rel="icon" type="image/png" href="{{asset('/upload/ghi.png')}}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>
         @yield('title')
@@ -28,8 +28,7 @@
     @yield('css')
 </head>
 <style>
-    *,h1,h2,h3,h4,h5,h6,p,span{
-        
+    *,h1,h2,h3,h4,h5,h6,p,span{      
         font-family: Pyidaungsu;
 </style>
 

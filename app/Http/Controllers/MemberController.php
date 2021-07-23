@@ -7,9 +7,11 @@ use Illuminate\Support\Facades\Hash;
 use App\Member;
 use App\CustomClass\MemberData;
 use App\User;
-use App\WebSiteInfo;
 use Auth;
 use App\Company;
+use App\Task;
+use App\CustomClass\TaskData;
+
 
 class MemberController extends Controller
 {
@@ -49,19 +51,16 @@ class MemberController extends Controller
 
         $password = $request->get('password');
         $confirm_password = $request->get('confirm_password');
+        // return "ok";
         if($password == $confirm_password){
             $member_id = Member::create([
                 'photo' => $fileName,
                 'name' => $request->get('name'),
-                'type' => $request->get('member_type'),
                 'phone' => $request->get('phone'),
                 'position' => $request->get('position'),
                 'address' => $request->get('address'),
                 'education' => $request->get('education'),
-                'detail' => $request->get('detail'),
-                'fb_link' => $request->get('facebook'),
-                'tw_link' => $request->get('twitter'),
-                'in_link' => $request->get('instagram')
+                'detail' => $request->get('detail')
             ])->id;
              
             User::create([
@@ -119,28 +118,20 @@ class MemberController extends Controller
             Member::findOrFail($id)->update([
                 'photo' => $image_name,
                 'name' => $request->get('name'),
-                'type' => $request->get('member_type'),
                 'phone' => $request->get('phone'),
                 'position' => $request->get('position'),
                 'address' => $request->get('address'),
                 'education' => $request->get('education'),
-                'detail' => $request->get('detail'),
-                'fb_link' => $request->get('facebook'),
-                'tw_link' => $request->get('twitter'),
-                'in_link' => $request->get('instagram')
+                'detail' => $request->get('detail')
             ]);
         } else {
             Member::findOrFail($id)->update([
                 'name' => $request->get('name'),
-                'type' => $request->get('member_type'),
                 'phone' => $request->get('phone'),
                 'position' => $request->get('position'),
                 'address' => $request->get('address'),
                 'education' => $request->get('education'),
-                'detail' => $request->get('detail'),
-                'fb_link' => $request->get('facebook'),
-                'tw_link' => $request->get('twitter'),
-                'in_link' => $request->get('instagram')
+                'detail' => $request->get('detail')
             ]);
         }
     }
@@ -162,24 +153,20 @@ class MemberController extends Controller
         $user_id = User::where('member_id', $id)->first();
         $user_id->delete();
 
-        $member_company = Company::where('member_id',$id)->get();
-        foreach ($member_company as $data) {
-            $image_paths = public_path() . '/upload/photo/' . $data->logo;
-            if (file_exists($image_paths)) {
-                unlink($image_paths);
-            }
+        $member_task = Task::where('user_id',$id)->get();
+        foreach ($member_task as $data) {
             $data->delete();
         }
         return response()->json(true);
     }
 
-    public function destroy_membercompany($id){
-        $mem_company = Company::where('member_id',$id)->get();
-        return response()->json(count($mem_company));
+    public function destroy_membertask($id){
+        $mem_task = Task::where('user_id',$id)->get();
+        return response()->json(count($mem_task));
     }
 
     public function get_all_member(){
-        $members = Member::orderBy('id', 'desc')->get();
+        $members = Member::all();
         $arr = [];
         foreach ($members as $data) {
             $member_data = new MemberData($data->id);
@@ -196,19 +183,20 @@ class MemberController extends Controller
     }
     public function member_profile()
     {
-        $web_info = WebSiteInfo::all();
         $member_id = Auth::user()->member_id;
         $member_data = Member::where('id', $member_id)->first();
-        // return $member_data;
+        // Member::where('member_id')
+        // $user_data = Auth::user();
+        // return $user_data;
         return view('admin.site_admin.member.member_profile')->with([
             'url' => 'member_profile',
-            'member_data' => $member_data,
-            'web_info' => $web_info
+            'member_data' => $member_data
         ]);
     }
     public function update_profile(Request $request)
     {
         $id = $request->get('id');
+        $password = $request->get('new_password');
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $image_name = uniqid() . '_' . $image->getClientOriginalName();
@@ -218,29 +206,59 @@ class MemberController extends Controller
             if (file_exists($image_path)) {
                 unlink($image_path);
             }
-            Member::findOrFail($id)->update([
-                'photo' => $image_name,
-                'name' => $request->get('name'),
-                'phone' => $request->get('phone'),
-                'address' => $request->get('address'),
-                'education' => $request->get('education'),
-                'detail' => $request->get('detail'),
-                'fb_link' => $request->get('facebook'),
-                'tw_link' => $request->get('twitter'),
-                'in_link' => $request->get('instagram')
-            ]);
+            if($password){
+                Member::findOrFail($id)->update([
+                    'photo' => $image_name,
+                    'name' => $request->get('name'),
+                    'phone' => $request->get('phone'),
+                    'position' => $request->get('position'),
+                    'address' => $request->get('address'),
+                    'education' => $request->get('education'),
+                    'detail' => $request->get('detail')
+                ]);
+                User::findOrFail(Auth::user()->id)->update([
+                    'password' => Hash::make($password)
+                ]);
+            }else{
+                Member::findOrFail($id)->update([
+                    'photo' => $image_name,
+                    'name' => $request->get('name'),
+                    'phone' => $request->get('phone'),
+                    'position' => $request->get('position'),
+                    'address' => $request->get('address'),
+                    'education' => $request->get('education'),
+                    'detail' => $request->get('detail')
+                ]);
+            }
+           
         } else {
-            Member::findOrFail($id)->update([
-                'name' => $request->get('name'),
-                'phone' => $request->get('phone'),
-                'address' => $request->get('address'),
-                'education' => $request->get('education'),
-                'detail' => $request->get('detail'),
-                'fb_link' => $request->get('facebook'),
-                'tw_link' => $request->get('twitter'),
-                'in_link' => $request->get('instagram')
-            ]);
+            if ($password) {
+                Member::findOrFail($id)->update([
+                    'name' => $request->get('name'),
+                    'phone' => $request->get('phone'),
+                    'position' => $request->get('position'),
+                    'address' => $request->get('address'),
+                    'education' => $request->get('education'),
+                    'detail' => $request->get('detail')
+                ]);
+                User::findOrFail(Auth::user()->id)->update([
+                    'password' => Hash::make($password)
+                ]);
+            } else {
+                Member::findOrFail($id)->update([
+                    'name' => $request->get('name'),
+                    'phone' => $request->get('phone'),
+                    'position' => $request->get('position'),
+                    'address' => $request->get('address'),
+                    'education' => $request->get('education'),
+                    'detail' => $request->get('detail')
+                ]);
+            }
+            // User::findOrFail(Auth::user()->id)->update([
+            //     'password' => Hash::make($password)
+            // ]);
         }
-        return redirect('member/profile');
+        // return redirect('member/profile');
     }
 }
+

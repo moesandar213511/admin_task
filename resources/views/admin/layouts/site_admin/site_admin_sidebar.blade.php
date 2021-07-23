@@ -6,7 +6,7 @@
   -->
     <div class="logo">
         <a href="{{url('/')}}" target="_blank" class="simple-text logo-normal">
-            <img src="{{asset('/user/images/logo-mea-admin.png')}}" alt="" width="80px" height="80px;">
+            <img src="{{asset('/upload/ghi.png')}}" alt="" width="80px" height="80px;">
         </a>
     </div>
  <div class="sidebar-wrapper">
@@ -44,66 +44,37 @@
                             <p>Member Account</p>
                         </a>
                     </li>
-                    <li class="nav-item @if($url=="company") active @endif">
+                    <li class="nav-item @if($url=="task") active @endif">
+                        <a class="nav-link" href="{{url('admin/task')}}">
+                            <i class="material-icons">book</i>
+                            <p>Task</p>
+                        </a>
+                    </li>
+                    {{-- <li class="nav-item @if($url=="list") active @endif">
+                        <a class="nav-link" href="{{url('admin/list')}}">
+                            <i class="material-icons">dashboard</i>
+                            <p>List Name</p>
+                        </a>
+                    </li> --}}
+
+                    {{-- <li class="nav-item @if($url=="company") active @endif">
                         <a class="nav-link" href="{{url('admin/company')}}">
                             <i class="material-icons">book</i>
                             <p>Company</p>
                         </a>
-                    </li>
-                    <li class="nav-item @if($url=="banner") active @endif">
-                        <a class="nav-link" href="{{url('admin/banner')}}">
-                            <i class="material-icons">dashboard</i>
-                            <p>Banner Image</p>
-                        </a>
-                    </li>
+                    </li> --}}
                     <!-- <li class="nav-item @if($url=="main_category") active @endif">
                         <a class="nav-link" href="{{url('admin/main_category')}}">
                             <i class="material-icons">dashboard</i>
                             <p>Main Category</p>
                         </a>
                     </li>  -->
-                    <li class="nav-item @if($url=="sub_category") active @endif">
+                    {{-- <li class="nav-item @if($url=="sub_category") active @endif">
                         <a class="nav-link" href="{{url('admin/sub_category')}}">
                             <i class="material-icons">bubble_chart</i>
                             <p>Category</p>
                         </a>
-                    </li>
-                    <li class="nav-item @if($url=="blog") active @endif">
-                        <a class="nav-link" href="{{url('admin/blog')}}">
-                            <i class="material-icons">view_module</i>
-                            <p>Blog</p>
-                        </a>
-                    </li>
-                    <li class="nav-item @if($url=="event") active @endif">
-                        <a class="nav-link" href="{{url('admin/event')}}">
-                            <i class="material-icons">event</i>
-                            <p>Event</p>
-                        </a>
-                    </li>
-                    <li class="nav-item @if($url=="ads") active @endif">
-                        <a class="nav-link" href="{{url('admin/ads')}}">
-                            <i class="material-icons">list</i>
-                            <p>Ads</p>
-                        </a>
-                    </li>
-                     <li class="nav-item @if($url=="site_info") active @endif">
-                        <a class="nav-link" href="{{url('admin/site_info')}}">
-                            <i class="material-icons">library_books</i>
-                            <p>Site Info</p>
-                        </a>
-                    </li>
-                     <li class="nav-item @if($url=="contact_list") active @endif">
-                        <a class="nav-link" href="{{url('admin/contact_list')}}">
-                            <i class="material-icons">content_paste</i>
-                            <p>Contact List</p>
-                        </a>
-                    </li>
-                    <li class="nav-item @if($url=="gallery") active @endif">
-                        <a class="nav-link" href="{{url('admin/gallery')}}">
-                            <i class="material-icons">content_paste</i>
-                            <p>Gallery</p>
-                        </a>
-                    </li>
+                    </li> --}}
                 @else
                     {{-- <li class="nav-item @if($url=="event") active @endif">
                         <a class="nav-link" href="{{url('member/event')}}">
@@ -111,20 +82,21 @@
                             <p>Manage Event</p>
                         </a>
                     </li> --}}
-                    <li class="nav-item @if($url=="company") active @endif">
-                        <a class="nav-link" href="{{url('member/company')}}">
+                    <li class="nav-item @if($url=="task") active @endif">
+                        <a class="nav-link" href="{{url('member/task')}}">
                             <i class="material-icons">book</i>
-                            <p>Company</p>
+                            <p>Task</p>
                         </a>
                     </li>
-                     <li class="nav-item @if($url=="member_profile") active @endif">
-                        <a class="nav-link" href="{{url('member/profile')}}">
-                            <i class="material-icons">person</i>
-                            <p>Member Profile</p>
-                        </a>
-                    </li>
+                    
                 @endif
             @endif
+             <li class="nav-item @if($url=="profile") active @endif">
+                        <a class="nav-link" href="{{url('member/profile')}}">
+                            <i class="material-icons">person</i>
+                            <p>Profile</p>
+                        </a>
+                    </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{url('logout')}}">
                     <i class="material-icons">logout</i>

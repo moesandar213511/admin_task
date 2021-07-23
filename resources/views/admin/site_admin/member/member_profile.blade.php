@@ -32,7 +32,7 @@
 @endsection
 
 @section('nav_bar_text')
-    Member Profile
+   Edit Profile
 @endsection
 @section('content')
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -49,20 +49,18 @@
                         <div class="card-header card-header-primary">
                             <h4 class="card-title ">Member Profile</h4>
                             <!-- <p class="card-category"> Here is a subtitle for this table</p> -->
-                        </div>
-                        
-                        
-                         <form action="{{url('/member/update_profile')}}" method="post" enctype="multipart/form-data">
-                                {{csrf_field()}}  
+                        </div>                       
+                         <form id="update_profile" enctype="multipart/form-data">
+                                {{csrf_field()}}
                             <input type="hidden" name="id" id="id" value="{{$member_data->id}}">
                             <div class="col-md-7 pt-2 pb-2 mx-auto card" style="margin-top:30px;">
                                     <div class="row">
                                         <div class="col-md-4">
-                                             <img src="{{asset('upload/member/'.$member_data->photo)}}" class="imagePreview" id="imgs" style="width: 100%;height: 100px;">
+                                             <img src="{{asset('upload/member/'.$member_data->photo)}}" class="imagePreview" id="imgs" style="width: 100%;height: 150px;">
                                     <label class="btn btn-md btn-success container-fluid rounded-0 m-0" for="edit_upload_photo">Upload</label>
                                     <input type="file" style="display:none;" id="edit_upload_photo" name="image" class="form-control package_photo" onchange="displaySelectedPhoto('edit_upload_photo','imgs')">
                                         </div>
-                                    </div>    <br>                                               
+                                    </div><br>                                               
                                     <div class="form-group">
                                         <label style="color:black;" for="update_name" class="col-form-label">Name:</label>
                                         <input type="text" class="form-control" id="update_name" name="name" value="{{$member_data->name}}">
@@ -73,11 +71,34 @@
                                         <input type="tel" class="form-control" id="update_phone" name="phone" value="{{$member_data->phone}}">
                                 
                                     </div><br>
+
+                                    <div class="form-group">
+                                        <label style="color:black;" for="update_position" class="col-form-label">Position:</label><br>
+                                        <input type="text" class="form-control" id="update_position" name="position" value="{{$member_data->position}}">
+                                    </div><br>
+
+                                    {{-- <div class="form-group">
+                                        <label style="color:black;" for="update_email" class="col-form-label">Email:</label><br>
+                                        <input type="email" class="form-control" id="update_email" name="email" value="{{\Illuminate\Support\Facades\Auth::user()->email}}">
+                                    </div><br> --}}
+                                    
+                                    <div class="form-group new_pass_input" style="display : none;">
+                                        <div class="form-label-group">
+                                            <input type="password" class="form-control" placeholder="New Password" name="new_password" autocomplete="off">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-primary float-left" onclick="change_pass()">Change Password</button>
+                                    </div>
+                                    {{-- <div class="form-group">
+                                        <label style="color:black;" for="update_password" class="col-form-label">Password:</label><br>
+                                        <input type="password" class="form-control" id="update_password" name="password" value="{{\Illuminate\Support\Facades\Auth::user()->password}}">
+                                    </div><br> --}}
                             
                                     <div class="form-group">
                                         <label style="color:black;" for="update_address" class="col-form-label">Address:</label><br>
                                         <textarea class="form-control" rows="4" id="update_address" name="address">{{$member_data->address}}</textarea> 
-                                    </div>
+                                    </div><br>
 
                                      <div class="form-group">
                                         <label style="color:black;" for="update_education" class="col-form-label">Education</label><br>
@@ -89,20 +110,7 @@
                                         <textarea class="form-control" rows="4" id="update_detail" name="detail">{{$member_data->detail}}</textarea>
                                     </div><br>
 
-                                    <div class="form-group">
-                                        <label style="color:black;" for="update_facebook" class="col-form-label">Facebook:</label><br>
-                                        <input type="text" class="form-control" id="update_facebook" name="facebook" value="{{$member_data->fb_link}}">
-                                    </div><br>
-
-                                    <div class="form-group">
-                                        <label style="color:black;" for="update_twitter" class="col-form-label">Twitter:</label><br>
-                                        <input type="text" class="form-control" id="update_twitter" name="twitter" value="{{$member_data->tw_link}}">
-                                    </div><br>
-
-                                    <div class="form-group">
-                                        <label style="color:black;" for="update_instagram" class="col-form-label">Instagram:</label><br>
-                                       <input type="text" class="form-control" id="update_instagram" name="instagram" value="{{$member_data->in_link}}">
-                                    </div><br>
+        
                                     <input type="submit" name="submit" class="rounded-0 btn btn-md btn-info" value="Change">                          
                             </div>
                         </form>                    
@@ -112,3 +120,53 @@
     </div>
 </div>
 @endsection
+
+@section('js')
+    <script>
+         $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $(document).ready(function(){
+            $('#update_profile').on('submit',function (e)
+            {
+                e.preventDefault();
+                var updateData = new FormData(this);
+                $.ajax
+                ({
+                    type: 'POST',
+                    url: "{{url('member/update_profile')}}",
+                    data:updateData,
+                    cache:false,
+                    processData: false,
+                    contentType: false,
+                    success: function(data){
+                        console.log(data);
+                        //alert(data);
+                        //$("#text").summernote('reset');
+                        // $('#edit_modalBox').modal('hide');
+                        toastr.success('Update profile data successful');
+                        // load();
+                    }
+                });
+                return false;
+            });
+        });
+
+        var click=1;
+        var change_pass=function(){
+            if(click % 2 == 0){
+            $(".new_pass_input").hide();
+            $(".new_pass_input input[type='password']").removeAttr('required');
+            }else{
+            $(".new_pass_input").show();
+            $(".new_pass_input input[type='password']").attr('required',true);
+            }
+            click++;
+        }
+
+    </script>
+@endsection
+
